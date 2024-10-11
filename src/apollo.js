@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql fonskionnu dahil ediyoruz Graphql şemasını tanımlamak için kullanılıyor.
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+const typeDefs = require('./datasource/user/schema');
+const resolvers = require('./datasource/user/resolvers');
 
 const server = new ApolloServer({
   typeDefs,
