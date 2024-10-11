@@ -4,14 +4,7 @@ const resolvers = require('./resolvers');
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-dataSources: () => {
-  return{
- 
-   };
-  },
-
-});
+  resolvers});
 
 
 // Sunucuyu başlat // port numarası belirtmezsek apollo server varsayılan olarak 4000 portunda başlatıyor çalışmayı.

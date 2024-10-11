@@ -2,14 +2,7 @@ const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql 
 
 // GraphQL şeması   //Graphql şemasını tanımlamak için kullanıyoruz
 
-const users =[ 
-    { id:'1', name:'Ali', age:'64',sickness:'grip'},
-    {id:'2', name:'Mehmet', age:'72',sickness:'mide bulanmasi'},
-];
-const medications=[
-    {id:'1', medTitle:'arveles',content:'for the headhack',author:'1',pill:true},
-    {id:'2',medTitle:'aferin',content:'for the stomache',author:'2',pill:false}
-]
+
 
 //graphql şeması sistemdki veri tiplerini ve hangi sorguların kullanılabileceğini belirler.
 const typeDefs = gql` 

@@ -1,6 +1,22 @@
 const { ApolloServer, gql } = require('apollo-server');
 const typeDefs = require('./schema')
 // Resolvers // sorguları nasıl yanıtlayacağımızı tanımlıyorz resolvers kısmında
+const users =[ 
+    { id:'1', name:'Ali', age:'64',sickness:'grip'},
+    {id:'2', name:'Mehmet', age:'72',sickness:'mide bulanmasi'},
+    {id:'3', name:'Ayşe', age:'42',sickness:'dis agrisi'},
+    {id:'4', name:'Mert', age:'52',sickness:'bel agrisi'},
+    {id:'5', name:'Jhon', age:'79',sickness:'omuz Agrisi'}
+];
+const medications=[
+    {id:'1', medTitle:'arveles',content:'for the headhack',author:'1',pill:true},
+    {id:'2',medTitle:'aferin',content:'for the stomache',author:'2',pill:false},
+    {id:'3',medTitle:'Ketorolak',content:'for the tooth',author:'3',pill:false},
+    {id:'4',medTitle:'Sulindak',content:'for the back',author:'4',pill:false},
+    {id:'5', medTitle:'Tolmetin',content:'for the shoulders',author:'5',pill:true}
+    
+    
+]
 const resolvers = {
     Query: {
       users: () => users,
