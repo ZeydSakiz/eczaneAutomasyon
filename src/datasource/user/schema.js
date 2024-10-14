@@ -1,6 +1,8 @@
 const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql fonskionnu dahil ediyoruz Graphql şemasını tanımlamak için kullanılıyor.
 const userResolvers = require('./resolvers')
-// GraphQL şeması   //Graphql şemasını tanımlamak için kullanıyoruz
+const medicationResolvers = require('../medications/resolvers')
+const medicationTypeDefs = require('../medications/schema')
+ // GraphQL şeması   //Graphql şemasını tanımlamak için kullanıyoruz
 
 
 
@@ -22,6 +24,7 @@ type User{
      age:Int
      gender:String
      sickness:String   
+     medications:[Medications]
 }
 `
 ;
