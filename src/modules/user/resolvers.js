@@ -2,6 +2,7 @@ const { ApolloServer, gql } = require('apollo-server');
 const userTypeDefs = require('./schema')
 const medicationResolvers = require('../medications/resolvers')
 const medicationTypeDefs = require('../medications/schema')
+//const medications = require('../medications/resolvers');
 // Resolvers // sorguları nasıl yanıtlayacağımızı tanımlıyorz resolvers kısmında
 const medications = [
     {id:'1', medTitle:'arveles',content:'for the headhack',pill:true, userId:'1'},
@@ -27,10 +28,12 @@ const userResolvers = {
   User: {
     medications: (parent) => {
        
-        return medications.filter(medications=> medications.userId === parent.id)
-    }
-
-  },
+   
+  
+      return medications.filter(medications=> medications.userId === parent.id) 
+     }
+},
+  
   Mutation: {
       addUser:(_, {name, age, gender, sickness}) =>{
           const newUser = {id:String(users.length + 1), name, age, gender, sickness, medications: [] };
@@ -38,7 +41,7 @@ const userResolvers = {
           return newUser;
       }
   }
- 
+
  };
   
     /* Apollo Server oluştur  
