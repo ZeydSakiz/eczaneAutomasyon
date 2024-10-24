@@ -2,9 +2,10 @@ const { ApolloServer, gql } = require('apollo-server');
 const userTypeDefs = require('./schema')
 const medicationResolvers = require('../medications/resolvers')
 const medicationTypeDefs = require('../medications/schema')
+const {connectToDb,getDb} = require('../../../db/db')
 //const medications = require('../medications/resolvers');
 // Resolvers // sorguları nasıl yanıtlayacağımızı tanımlıyorz resolvers kısmında
-const medications = [
+/*const medications = [
     {id:'1', medTitle:'arveles',content:'for the headhack',pill:true, userId:'1'},
     {id:'2',medTitle:'aferin',content:'for the stomache',pill:false, userId:'2'},
     {id:'3',medTitle:'Ketorolak',content:'for the tooth',pill:false, userId:'3'},
@@ -19,26 +20,34 @@ const users =[
     {id:'4', name:'Mert', age:'52', gender:"male ", sickness:'bel agrisi'},
     {id:'5', name:'Jhon', age:'79', gender:"male ", sickness:'omuz Agrisi'}
 ];
-
+*/
 const userResolvers = {
     Query: {
-      users: () => users
+      users: async () => {
+        const db = getDb();
+        return await db.collection('users').find().toArray();
+      }
       
   },
   User: {
-    medications: (parent) => {
+    medications: async (parent) => {
+      const db = getDb();
+      return await db.collection('medications').find({author:parent.id}).toArray();
        
    
   
-      return medications.filter(medications=> medications.userId === parent.id) 
+      //return medications.filter(medications=> medications.userId === parent.id) 
      }
 },
   
   Mutation: {
-      addUser:(_, {name, age, gender, sickness}) =>{
-          const newUser = {id:String(users.length + 1), name, age, gender, sickness, medications: [] };
-          users.push(newUser);
-          return newUser;
+      addUser: async (_, {name, age, gender, sickness}) =>{
+        const db = getDb();
+        const result = await db.collection('users').insertOne({name, age, gender, sickness});
+         return {id: result.insertedId, name, age, gender, sickness}
+         // const newUser = {id:String(users.length + 1), name, age, gender, sickness, medications: [] };
+          //users.push(newUser);
+         
       }
   }
 

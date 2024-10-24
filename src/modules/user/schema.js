@@ -15,11 +15,11 @@ type Query{
    
 }
 type Mutation{
-    addUser(name:String!, age:Int, gender:String, sickness:String): User
+    addUser( name:String!, age:Int, gender:String, sickness:String): User
 
 }
 type User{
-     id: ID!
+     _id: ID!
      name:String!
      age:Int
      gender:String
