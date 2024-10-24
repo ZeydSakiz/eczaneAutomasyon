@@ -11,16 +11,24 @@ const userTypeDefs = gql`
  
 type Query{
      users: [User]
-  
-   
 }
-type Mutation{
-    addUser( name:String!, age:Int, gender:String, sickness:String): User
 
+input UserInput{
+     
+     name: String!
+     age:Int
+     sickness:String
+     gender:String
+     
 }
+
+type Mutation{
+    addUser(input: UserInput!): User
+}
+
 type User{
-     _id: ID!
-     name:String!
+     id: ID!
+     name:String
      age:Int
      gender:String
      sickness:String   

@@ -41,10 +41,14 @@ const userResolvers = {
 },
   
   Mutation: {
-      addUser: async (_, {name, age, gender, sickness}) =>{
-        const db = getDb();
-        const result = await db.collection('users').insertOne({name, age, gender, sickness});
-         return {id: result.insertedId, name, age, gender, sickness}
+      addUser: async (_, {input}) =>{
+        const db = await getDb();
+
+      
+        const result = await db.collection('users').insertOne({input});
+        
+        return {id: result.insertedId, input}
+      
          // const newUser = {id:String(users.length + 1), name, age, gender, sickness, medications: [] };
           //users.push(newUser);
          
