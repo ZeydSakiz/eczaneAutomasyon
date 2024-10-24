@@ -23,13 +23,17 @@ const users =[
 */
 const userResolvers = {
     Query: {
-      users: async () => {
-        const db = getDb();
-        return await db.collection('users').find().toArray();
-      }
+      users: async (_,{input}) => {
+        const db = await getDb();
+        //return await db.collection('users').find(input).toArray();
+        const users = await db.collection('users').find(input).toArray();
+        return users.map(user => ({
+          id: user._id,
+          ...user.input  }));
+      },
       
   },
-  User: {
+ /* User: {
     medications: async (parent) => {
       const db = getDb();
       return await db.collection('medications').find({author:parent.id}).toArray();
@@ -39,7 +43,7 @@ const userResolvers = {
       //return medications.filter(medications=> medications.userId === parent.id) 
      }
 },
-  
+  */
   Mutation: {
       addUser: async (_, {input}) =>{
         const db = await getDb();

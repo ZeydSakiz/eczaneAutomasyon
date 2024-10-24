@@ -22,10 +22,6 @@ input UserInput{
      
 }
 
-type Mutation{
-    addUser(input: UserInput!): User
-}
-
 type User{
      id: ID!
      name:String
@@ -34,6 +30,10 @@ type User{
      sickness:String   
      medications:[Medications]
 }
+type Mutation{
+    addUser(input: UserInput!): User
+}
+
 `
 ;
 module.exports = userTypeDefs;
