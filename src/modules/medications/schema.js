@@ -17,7 +17,6 @@ type Mutation{
   
 }
   type Medications{
-     _id:ID!
      medTitle:String!
      content:String!
      pill: Boolean

@@ -31,7 +31,7 @@ const server = new ApolloServer({
  
      }
  });
- 
+ /*
  app.get('/api',(req,res)=>{
      let users = [];
      db.collection('users')
@@ -59,7 +59,7 @@ const server = new ApolloServer({
          res.status(501).json({hata:'veri eklenemedi'})
      })
  })
- 
+ */
 
 // Sunucuyu başlat // port numarası belirtmezsek apollo server varsayılan olarak 4000 portunda başlatıyor çalışmayı.
 
