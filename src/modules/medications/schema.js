@@ -21,7 +21,7 @@ type Mutation{
      medTitle:String!
      content:String!
      pill: Boolean
-     author: User
+     author: [User]
 
 }
 `;
