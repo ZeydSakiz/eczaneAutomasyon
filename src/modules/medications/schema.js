@@ -12,12 +12,12 @@ type Query{
    
 }
 type Mutation{
-     addMedication(medTitle:String!, content:String!, pill:Boolean, author: ID):Medications
+     addMedication( medTitle:String!, content:String!, pill:Boolean, author: ID):Medications
   
   
 }
   type Medications{
-     id:ID!
+     _id:ID!
      medTitle:String!
      content:String!
      pill: Boolean

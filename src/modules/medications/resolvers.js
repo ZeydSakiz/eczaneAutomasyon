@@ -19,25 +19,26 @@ const medicationResolvers = {
         const db=getDb();
         return await db.collection('medications').find().toArray();
       }
-  },
-  Mutation: {
-   
-      addMedication: async (_,{medTitle, content, pill,author}) => {
-        const db = getDb();
-        const result = await db.collection('medications').insertOne({medTitle, content,pill, author});
-          return{id:result.insertedId, medTitle, content,pill, author}
-        //const newMedication = {id:String(medications.length + 1),medTitle, content, pill, userId};
-          //medications.push(newMedication);
-          //return newMedication;
-      },  
-  },
-  Medications:{
+    },
+    Medications:{
         author: async (parent)=> {
          const db = getDb();
              return await db.collection('users').findOne({_id:parent.author});
     },  
 
-  },
+    },
+    Mutation: {
+   
+      addMedication: async (_,{medTitle, content, pill,author}) => {
+        const db = getDb();
+        const result = await db.collection('medications').insertOne({medTitle, content,pill, author});
+          return{id: result.insertedId, medTitle, content,pill, author}
+        //const newMedication = {id:String(medications.length + 1),medTitle, content, pill, userId};
+          //medications.push(newMedication);
+          //return newMedication;
+      },  
+    },
+  
  
  
   };
