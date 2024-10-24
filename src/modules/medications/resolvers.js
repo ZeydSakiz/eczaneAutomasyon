@@ -29,7 +29,7 @@ const medicationResolvers = {
     },
     Mutation: {
    
-      addMedication: async (_,{medTitle, content, pill,author}) => {
+      addMedication: async (_,{medTitle, content, pill, author}) => {
         const db = getDb();
         const result = await db.collection('medications').insertOne({medTitle, content,pill, author});
           return{id: result.insertedId, medTitle, content,pill, author}

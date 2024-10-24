@@ -23,9 +23,10 @@ const server = new ApolloServer({
  
          if(!err){
  
-             app.listen(3000,() => {
-         console.log(`🚀 Sunucu çalışıyor:`);
-          })
+            server.listen().then(({ url }) => {
+                console.log(`🚀 Sunucu çalışıyor: ${url}`);
+              });
+          
           db=getDb()
  
      }
@@ -61,7 +62,5 @@ const server = new ApolloServer({
  
 
 // Sunucuyu başlat // port numarası belirtmezsek apollo server varsayılan olarak 4000 portunda başlatıyor çalışmayı.
-server.listen().then(({ url }) => {
-  console.log(`🚀 Sunucu çalışıyor: ${url}`);
-});
+
    
