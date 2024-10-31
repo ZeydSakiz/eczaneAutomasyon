@@ -2,28 +2,12 @@ const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql 
 const userResolvers = require('./resolvers')
 const medicationResolvers = require('../medications/resolvers')
 const medicationTypeDefs = require('../medications/schema')
- // GraphQL şeması   //Graphql şemasını tanımlamak için kullanıyoruz
 
 
-
-//graphql şeması sistemdki veri tiplerini ve hangi sorguların kullanılabileceğini belirler.
 const userTypeDefs = gql` 
  
 type Query{
      users: [User]
-}
-
-input UserInput{
-     
-     name: String!
-     age:Int
-     sickness:String
-     gender:String
-     
-}
-
-type Mutation{
-    addUser(input: UserInput!): User
 }
 
 type User{
@@ -32,8 +16,26 @@ type User{
      age:Int
      gender:String
      sickness:String   
-     medications:[Medications]
+     medications:[ID]
+     createDate:String
+     upgradeDate:String
 }
+
+input UserInput{ 
+     name: String!
+     age:Int!
+     sickness:String
+     gender:String
+     medications:[ID]
+     createDate:String
+     upgradeDate:String
+}
+
+type Mutation{
+    addUser(input: UserInput!): User
+    updateUser(mail:String):User
+}
+
 `
 ;
 module.exports = userTypeDefs;

@@ -3,39 +3,33 @@ const medicationTypeDefs = require('./schema')
 const {connectToDb,getDb} = require('../../../db/db')
 
 
-/*const medications=[
-    {id:'1', medTitle:'arveles',content:'for the headhack',pill:true, userId:'1'},
-    {id:'2',medTitle:'aferin',content:'for the stomache',pill:false, userId:'2'},
-    {id:'3',medTitle:'Ketorolak',content:'for the tooth',pill:false, userId:'3'},
-    {id:'4',medTitle:'Sulindak',content:'for the back',pill:false, userId:'4'},
-    {id:'5', medTitle:'Tolmetin',content:'for the shoulders',pill:true, userId:'5'}
-];
-    */
-    
+    //createdate, updatedate, şu bilgileri userdaki gibi input olarak baştan ayarla, author kısmını user ile değiştir, medicationu İD olarak sakla ki daha sonra çekebilesin,
 
 const medicationResolvers = {
     Query: {
-      medications: async () => {
-        const db=getDb();
-        return await db.collection('medications').find().toArray();
+      medications: async (_,{input}) => {
+        const db = await getDb();
+        const medications = await db.collection('medications').find(input).toArray();
+        return medications.map(medication => ({
+          id: medication._id,
+          ...medication.input}));
       }
     },
-    Medications:{
-        author: async (parent)=> {
-         const db = getDb();
-             return await db.collection('users').findOne({_id:parent.author});
-    },  
 
-    },
+    Medications:{
+      users: async (UserInput) => {
+        const db = getDb();
+        return await db.collection('users').find({UserInput}).toArray();
+       }
+  },
     Mutation: {
    
-      addMedication: async (_,{medTitle, content, pill, author}) => {
-        const db = getDb();
-        const result = await db.collection('medications').insertOne({medTitle, content,pill, author});
-          return{id: result.insertedId, medTitle, content,pill, author}
-        //const newMedication = {id:String(medications.length + 1),medTitle, content, pill, userId};
-          //medications.push(newMedication);
-          //return newMedication;
+      addMedication: async (_,{input}) => {
+        const db = await getDb();
+
+        const result = await db.collection('medications').insertOne({input});
+          return{id: result.insertedId, input}
+       
       },  
     },
   
@@ -43,8 +37,5 @@ const medicationResolvers = {
  
   };
 
-   /*const server = new ApolloServer({ 
-    typeDefs: medicationTypeDefs ,
-    resolvers: medicationResolvers});  */
-    
+     
   module.exports = medicationResolvers; 
