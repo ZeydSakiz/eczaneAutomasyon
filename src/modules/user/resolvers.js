@@ -11,7 +11,7 @@ const userResolvers = {
         const users = await db.collection('users').find(input).toArray();
         return users.map(user => ({
           id: user._id,
-          ...user.input  }));
+          ...user.input, createDate: new Date().toISOString()  }));
       },
       
   },

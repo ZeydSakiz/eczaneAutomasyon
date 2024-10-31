@@ -12,7 +12,7 @@ const medicationResolvers = {
         const medications = await db.collection('medications').find(input).toArray();
         return medications.map(medication => ({
           id: medication._id,
-          ...medication.input  }));
+          ...medication.input}));
       }
     },
 
