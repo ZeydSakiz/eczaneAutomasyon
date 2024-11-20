@@ -9,15 +9,17 @@ type Query{
 }
 
 type Medications{
+     medicationId:ID
      medTitle:String
      content:String
      pill: Boolean
-     users: [ID]
+     users: [User]
 }
 
 input MedicationInput{
-   medTitle:String!
-   content:String!
+   medicationId:ID
+   medTitle:String
+   content:String
    pill:Boolean
    users:[ID]
    

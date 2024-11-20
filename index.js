@@ -1,17 +1,18 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql fonskionnu dahil ediyoruz Graphql şemasını tanımlamak için kullanılıyor.
 const {mergeTypeDefs, mergeResolvers} = require('@graphql-tools/merge') ;
-const {userTypeDefs,userResolvers, medicationTypeDefs,medicationResolvers, user_medicationTypeDefs, user_medicationResolvers} = require ('./src/modules/index');
+const {userTypeDefs,userResolvers, medicationTypeDefs,medicationResolvers} = require ('./src/modules/index');
 const {getDb} = require('./db/db')
-const typeDefs = mergeTypeDefs([userTypeDefs, medicationTypeDefs,user_medicationTypeDefs]);
-const resolvers = mergeResolvers([userResolvers, medicationResolvers,user_medicationResolvers]);
+const typeDefs = mergeTypeDefs([userTypeDefs, medicationTypeDefs]);
+const resolvers = mergeResolvers([userResolvers, medicationResolvers]);
 const {connectToDb,getDB} = require('./db/db')
 
 
 getDb();
 const server = new ApolloServer({
  typeDefs,
- resolvers
+ resolvers,
+ context:()=>({db}),
  });
 
  const app = express();

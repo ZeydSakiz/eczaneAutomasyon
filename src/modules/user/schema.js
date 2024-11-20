@@ -1,41 +1,44 @@
 const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql fonskionnu dahil ediyoruz Graphql şemasını tanımlamak için kullanılıyor.
+const mongoose = require('mongoose')
+const ObjectId = require('mongodb')
 const userResolvers = require('./resolvers')
 const medicationResolvers = require('../medications/resolvers')
 const medicationTypeDefs = require('../medications/schema')
 
-
-const userTypeDefs = gql` 
+const userTypeDefs = gql`  
  
 type Query{
-     users: [User]
+     getUserById(_id:ID!): User!
+     getAllUsers:[User]!
+     
 }
 
 type User{
-     id: ID!
-     name:String
-     age:Int
-     gender:String
-     sickness:String   
-     medications:[ID]
-     createDate:String
+     _id:ID
+     name:String!
+     age:Int!
+     gender:String!
+     sickness:String!   
+     createDate:String 
      upgradeDate:String
+     medications:[Medications]
 }
 
 input UserInput{ 
-     name: String!
-     age:Int!
-     sickness:String
+     _id:ID
+     name: String
+     age:Int
      gender:String
-     medications:[ID]
+     sickness:String
      createDate:String
-     upgradeDate:String
+     updateDate:String
+    
 }
 
 type Mutation{
     addUser(input: UserInput!): User
-    updateUser(mail:String):User
 }
 
 `
-;
+
 module.exports = userTypeDefs;
