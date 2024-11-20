@@ -17,9 +17,9 @@ const medicationResolvers = {
     },
 
     Medications:{
-      users: async (UserInput) => {
+      users: async (id) => {
         const db = getDb();
-        return await db.collection('users').find({UserInput}).toArray();
+        return await db.collection('users').find({id}).toArray();
        }
   },
     Mutation: {
