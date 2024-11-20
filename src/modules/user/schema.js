@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');  //apollo server ve gql fonskionnu dahil ediyoruz Graphql şemasını tanımlamak için kullanılıyor.
+const { ApolloServer, gql } = require('apollo-server'); 
 const mongoose = require('mongoose')
 const ObjectId = require('mongodb')
 const userResolvers = require('./resolvers')

@@ -16,7 +16,7 @@ const userResolvers = {
       const users = await db.collection('users').find().toArray();
       return users
     },
-    getUserById: async (parent,args, { _id =new ObjectId(args._id)} ) => {//graphql ekranından id ile arama yapabiliyorum istedğim veriyoe erişiyorum ama burada ObjectedID yanlış görünüoyr diğer türlü sorun yok gibi şimdilik
+    getUserById: async (parent,args, { _id =new ObjectId(args._id)} ) => {
       const db = getDb()
       const result = await db.collection('users').findOne({_id})
       console.log(result)
@@ -34,21 +34,21 @@ const userResolvers = {
 },
   Mutation: {
      addUser: async (parent, args, { db }) => {
-      const input = args.input; // Kullanıcıdan gelen input
-      const _id = input._id ? new ObjectId(input._id) : new ObjectId(); // ObjectId formatı
+      const input = args.input; 
+      const _id = input._id ? new ObjectId(input._id) : new ObjectId(); 
   
       const newInput = {
         ...input,
-        _id, // Güncelleme veya ekleme için id
-        ...(input._id ? {} : { createdDate: new Date().toISOString() }), // Yeni kayıtsa oluşturulma tarihi ekle
-        updatedDate: new Date().toISOString(), // Güncelleme tarihi her zaman eklenir
+        _id, 
+        ...(input._id ? {} : { createdDate: new Date().toISOString() }), 
+        updatedDate: new Date().toISOString(), 
       };
   
-      // `upsert` işlemi: `_id` eşleşirse güncelle, yoksa yeni kayıt oluştur
+      
       const result = await db.collection('users').updateOne(
-        { _id }, // Sorgu filtresi
-        { $set: newInput }, // Güncelleme veya ekleme yapılacak alanlar
-        { upsert: true } // Eşleşme yoksa yeni kayıt oluştur
+        { _id }, 
+        { $set: newInput }, 
+        { upsert: true } 
       );
   
       console.log("Result:", result);
@@ -59,8 +59,6 @@ const userResolvers = {
         ...newInput,
       };
     },
-
-
     /*
   addUser: async (parent,args, {input}) =>{
         const db = await getDb();
@@ -82,5 +80,4 @@ const userResolvers = {
  };
   module.exports = userResolvers;
 
-  //kolkesyion formatı nasıl olmalı input kısmı açılır kapanır şekilde mi olmalı yoksa direkt görünmeli bilgiler,
-  //updateUser4 kısmını ayrıca yapsam oluyor ama tek satır içerisinde hem update hem de add kısmını yapamasıdm nasıl yapabilirim
+  
