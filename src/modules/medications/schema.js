@@ -4,24 +4,29 @@ const medicationResolvers = require('./resolvers')
 const medicationTypeDefs = gql` 
  
 type Query{
+   getMedicationById(_id:ID!):Medications!
    medications:[Medications]
    
 }
 
 type Medications{
-     medicationId:ID
+     _id:ID
      medTitle:String
      content:String
      pill: Boolean
-     users: [User]
+     users:[ID]
+     createDate:String
+     updateDate:String
 }
 
 input MedicationInput{
-   medicationId:ID
+   _id:ID
    medTitle:String
    content:String
    pill:Boolean
    users:[ID]
+   createDate:String
+   updateDate:String
    
 }
 

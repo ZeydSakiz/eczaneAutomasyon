@@ -21,7 +21,7 @@ type User{
      sickness:String!   
      createDate:String 
      upgradeDate:String
-     medications:[Medications]
+     medications:[ID]
 }
 
 input UserInput{ 
@@ -32,6 +32,7 @@ input UserInput{
      sickness:String
      createDate:String
      updateDate:String
+     medications:[ID]
     
 }
 
