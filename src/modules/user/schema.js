@@ -35,6 +35,7 @@ input UserInput{
      medications:[ID]
     
 }
+     
 
 type Mutation{
     addUser(input: UserInput!): User
