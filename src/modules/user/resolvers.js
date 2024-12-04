@@ -22,12 +22,12 @@ const userResolvers = {
       if (!result) {
         throw new Error("Kullanıcı bulunamadı.");
       }
-      //const medication = await db.collection('medications').findOne(_id = new ObjectId(result.medications[0]))
+      
       const medication = await db.collection('medications').findOne({_id:new ObjectId(result.medications[0])});
       if(!medication){
         console.log("ilaç bulunamadı",_id)
-        
       }
+
      console.log(result,medication)
       return {
         user:result,

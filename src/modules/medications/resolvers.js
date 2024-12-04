@@ -14,11 +14,22 @@ const medicationResolvers = {
         console.log(medications)
         return medications;
       },
+
+
       getMedicationById:async(parent,args,{_id = new ObjectId(args._id)})=>{
         const db =getDb();
         const result = await db.collection('medications').findOne(_id);
-        console.log(result)
-        return result; 
+        if(!result){
+          console.log("ilac bulunamadı",result)
+        }
+        const user = await db.collection('users').findOne({_id:new ObjectId(result.users[0])})
+        if(!user){
+          console.log("hasta bulunamadı")
+        }
+        console.log(result,user)
+        return {
+          medications:result,  
+          user:user,}; 
       }
     },
     Mutation: {

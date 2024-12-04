@@ -7,8 +7,12 @@ const medicationTypeDefs = require('../medications/schema')
 
 const userTypeDefs = gql`  
  
+type GetUserByIdResponse {
+  user: User!
+  medications: Medications!
+}
 type Query{
-     getUserById(_id:ID!): User!
+     getUserById(_id:ID!): GetUserByIdResponse!
      getAllUsers:[User]!
      
 }
@@ -28,7 +32,7 @@ input UserInput{
      _id:ID
      name: String
      age:Int
-     gender:String
+     gender:String 
      sickness:String
      createDate:String
      updateDate:String
