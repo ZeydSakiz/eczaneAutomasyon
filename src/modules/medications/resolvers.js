@@ -15,7 +15,6 @@ const medicationResolvers = {
         return medications;
       },
 
-
       getMedicationById:async(parent,args,{_id = new ObjectId(args._id)})=>{
         const db =getDb();
         const result = await db.collection('medications').findOne(_id);
@@ -26,15 +25,15 @@ const medicationResolvers = {
         if(!user){
           console.log("hasta bulunamadı")
         }
+        result.users=[user]
         console.log(result,user)
-        return {
-          medications:result,  
-          user:user,}; 
+        return result;
       }
     },
+
     Mutation: {
       addMedication: async (parent,args,{db}) => {
-        const input = args.input//addMedication kısmında da id ye göre eğer eşleşen id varsa sorunsuz biçimde güncelleme yapıtor eşleşen id yoksda yeni kullanıcı oluşturuyor
+        const input = args.input
         const _id =  input._id ? new ObjectId(input._id) : new ObjectId(); 
         const newInput = {
           ...input,
@@ -49,6 +48,7 @@ const medicationResolvers = {
           
         );
        console.log(newInput);
+       return result
       },  
     },
   };   

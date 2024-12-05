@@ -22,19 +22,20 @@ const userResolvers = {
       if (!result) {
         throw new Error("Kullanıcı bulunamadı.");
       }
-      
+
       const medication = await db.collection('medications').findOne({_id:new ObjectId(result.medications[0])});
       if(!medication){
         console.log("ilaç bulunamadı",_id)
       }
-
-     console.log(result,medication)
-      return {
-        user:result,
-        medications:medication,
-      };  
-    },
+      result.medications=[medication];
+      console.log(result,medication)
+      return result;
+        
+      
+      
+    },//selçuk beyin feed örneğindeki gibi bri yapı oluşturman ordaki parantezdeki örneği sen if medicationv varsa olarkq düzenleyebilirsin
     
+   
 /*  
     getUserById: async (parent,args, { _id = new ObjectId(args._id) } ) => {
       const db = getDb()
@@ -50,12 +51,12 @@ const userResolvers = {
       
       
     },*/
-    //veriler çekiloyr ve console da yazdırılıyor sadece graphql ekranında yazdırılamıyorlar.
-  },  // bu console da görünen verileri kullanmanın bir yolunu bul.
+    
+  },  
 
   Mutation: {
      addUser: async (parent, args, { db }) => {
-      const input = args.input; //direkt input olarak al args kısmı gereksiz onu silebilirsin(sildiğimde hata veriyor args.input kullanıcının girdiği input değerini görüp onu input olarak aktarıyor)
+      const input = args.input; 
       const _id = input._id ? new ObjectId(input._id) : new ObjectId(); 
       const newInput = {
         ...input,
@@ -74,8 +75,7 @@ const userResolvers = {
       console.log("New/Updated Input:", newInput);
   
       return {
-        _id: _id.toString(),
-        ...newInput,
+        result
       };
     },
   },//medications idsi ile veri tabaınından sorgu alıp bilgileri döndüreceksin
