@@ -9,7 +9,8 @@ const userTypeDefs = gql`
  
 
 type Query{
-     getUserById(_id:ID!):User
+     getUserById(_id:ID!):User!
+     
      getAllUsers:[User]!
      
 }

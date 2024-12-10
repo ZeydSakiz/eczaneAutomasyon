@@ -15,46 +15,26 @@ const userResolvers = {
       const users = await db.collection('users').find().toArray();
       return users
     },
+    getUserById: async (parent, args, { db }) => {
+      const user = await db.collection('users').findOne({ _id: new ObjectId(args._id) });
+      return user; 
+    }
+  },
+  User:{
+    medications: async (parent,{ db }) => {
+      const medicationIds = parent.medications; 
+      if(!medicationIds){
+        return null}
 
-    getUserById: async (parent,args, { _id = new ObjectId(args._id)})=>{
-      const db = getDb();
-      const result = await db.collection('users').findOne({ _id });
-      if (!result) {
-        throw new Error("Kullanıcı bulunamadı.");
-      }
+      {return await db
+        .collection('medications').find({ _id: { $in: medicationIds.map(id => new ObjectId(id))}}).toArray();}
+    }
+  
 
-      const medication = await db.collection('medications').findOne({_id:new ObjectId(result.medications[0])});
-      if(!medication){
-        console.log("ilaç bulunamadı",_id)
-      }
-      result.medications=[medication];
-      console.log(result,medication)
-      return result;
-        
-      
-      
-    },//selçuk beyin feed örneğindeki gibi bri yapı oluşturman ordaki parantezdeki örneği sen if medicationv varsa olarkq düzenleyebilirsin
-    
-   
-/*  
-    getUserById: async (parent,args, { _id = new ObjectId(args._id) } ) => {
-      const db = getDb()
-      const result = await db.collection('users').findOne({_id})
-      if(!result){
-        throw new Error("kullanıcı bulunamadı..")
-      }
-      var a = result.medications[0]
-      const medi = await db.collection('medications').find(id = new ObjectId(a)).toArray()
-      console.log(result,"qweqwe:",medi)
-      return result
-      
-      
-      
-    },*/
-    
-  },  
 
-  Mutation: {
+  },
+
+  Mutation: { 
      addUser: async (parent, args, { db }) => {
       const input = args.input; 
       const _id = input._id ? new ObjectId(input._id) : new ObjectId(); 
@@ -78,8 +58,7 @@ const userResolvers = {
         result
       };
     },
-  },//medications idsi ile veri tabaınından sorgu alıp bilgileri döndüreceksin
-  //id ile istek atma durumuna bak feed
+  },
  };
   module.exports = userResolvers;
 

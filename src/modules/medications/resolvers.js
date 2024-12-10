@@ -4,8 +4,6 @@ const {connectToDb,getDb} = require('../../../db/db');
 const { get } = require('mongoose');
 const {ObjectId} = require('mongodb');
 
-    //createdate, updatedate, şu bilgileri userdaki gibi input olarak baştan ayarla, author kısmını user ile değiştir, medicationu İD olarak sakla ki daha sonra çekebilesin,
-
 const medicationResolvers = {
     Query: {
       medications: async (parent,{}) => {
@@ -21,16 +19,18 @@ const medicationResolvers = {
         if(!result){
           console.log("ilac bulunamadı",result)
         }
-        const user = await db.collection('users').findOne({_id:new ObjectId(result.users[0])})
-        if(!user){
-          console.log("hasta bulunamadı")
-        }
-        result.users=[user]
-        console.log(result,user)
         return result;
       }
     },
+    Medications:{
 
+      users: async (parent, args, { db }) => {
+        const userIds = parent.users;
+        if(!userIds){
+          return null}
+       {return await db.collection('users').find({ _id: { $in: userIds.map(id => new ObjectId(id)) } }).toArray();}
+      }
+    },
     Mutation: {
       addMedication: async (parent,args,{db}) => {
         const input = args.input
@@ -41,11 +41,11 @@ const medicationResolvers = {
           ...(input._id ? {} : { createdDate: new Date().toISOString() }), 
           updatedDate: new Date().toISOString(), 
         };
+
         const result = await db.collection('medications').updateOne(
           {_id},
           {$set:newInput},
           {upsert:true}
-          
         );
        console.log(newInput);
        return result

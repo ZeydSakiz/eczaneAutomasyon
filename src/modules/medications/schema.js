@@ -9,7 +9,7 @@ const medicationTypeDefs = gql`
 
 
 type Query{
-   getMedicationById(_id:ID!):Medications
+   getMedicationById(_id:ID!):Medications!
    medications:[Medications]!
    
 }
