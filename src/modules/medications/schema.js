@@ -19,7 +19,6 @@ type Medications{
      medTitle:String!
      content:String!
      pill: Boolean
-     users:[User]
      createDate:String
      updateDate:String
 }
@@ -29,7 +28,6 @@ input MedicationInput{
    medTitle:String!
    content:String!
    pill:Boolean
-   users:[ID]
    createDate:String
    updateDate:String
    

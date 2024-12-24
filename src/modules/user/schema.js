@@ -20,7 +20,7 @@ type User{
      name:String!
      age:Int!
      gender:String!
-     sickness:String!   
+     sickness:String!  
      createDate:String 
      upgradeDate:String
      medications:[Medications]
